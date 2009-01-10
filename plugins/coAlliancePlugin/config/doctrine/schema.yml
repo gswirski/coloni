@@ -1,0 +1,56 @@
+Alliance:
+  tableName: alliance
+  columns:
+    id:
+      type: integer(2)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(50)
+      notnull: true
+  indexes:
+    alliance_name_unique:
+      fields: name
+      type: unique
+
+AllianceBuilding:
+  tableName: alliance_building
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    alliance_id:
+      type: integer(2)
+      notnull: true
+    building_id:
+      type: integer(1)
+      notnull: true
+  relations:
+    Alliance:
+      local: alliance_id
+      foreign: id
+      type: one
+    Building:
+      local: building_id
+      foreign: id
+      type: one
+
+AllianceUser:
+  tableName: alliance_user
+  columns:
+    alliance_id:
+      type: integer(2)
+      primary: true
+    user_id:
+      type: integer(2)
+      primary: true
+  relations:
+    Alliance:
+      local: alliance_id
+      foreign: id
+      type: one
+    User:
+      local: user_id
+      foreign: id
+      type: one

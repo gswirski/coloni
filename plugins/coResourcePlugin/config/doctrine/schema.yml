@@ -1,0 +1,35 @@
+Resource:
+  tableName: resource
+  columns:
+    id:
+      type: integer(1)
+      primary: true
+      autoincrement: true
+    module_name:
+      type: string(50)
+      notnull: true
+    type:
+      type: enum
+      values: ['fundamental', 'extra', 'rating']
+      notnull: true
+
+FundamentalResource:
+  inheritance:
+    extends: Resource
+    type: column_aggregtion
+    keyField: type
+    keyValue: 'fundamental'
+
+ExtraResource:
+  inheritance:
+    extends: Resource
+    type: column_aggregtion
+    keyField: type
+    keyValue: 'extra'
+
+RatingResource:
+  inheritance:
+    extends: Resource
+    type: column_aggregtion
+    keyField: type
+    keyValue: 'rating'

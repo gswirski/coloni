@@ -1,0 +1,95 @@
+Country:
+  tableName: country
+  columns:
+    id:
+      type: integer(2)
+      primary: true
+      autoincrement: true
+    user_id: integer(2)
+    name:
+      type: string(50)
+      notnull: true
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      type: one
+
+Field:
+  tableName: `field`
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    x:
+      type: integer(2)
+      notnull: true
+    'y':
+      type: integer(2)
+      notnull: true
+    type:
+      type: string(8)
+      default: blank
+      notnull: true
+    settlement_id:
+      type: integer(4)
+      notnull: true
+  relations:
+    Settlement:
+      local: settlement_id
+      foreign: id
+      type: one
+
+Land:
+  tableName: land
+  columns:
+    id:
+      type: integer(1)
+      primary: true
+      autoincrement: true
+    type:
+      type: string(50)
+      notnull: true
+
+Position:
+  tableName: position
+  columns:
+    x:
+      type: integer(2)
+      primary: true
+    'y':
+      type: integer(1)
+      primary: true
+    land_id:
+      type: integer(1)
+      default: '1'
+    is_free:
+      type: integer(1)
+      default: '1'
+      notnull: true
+  relations:
+    Land:
+      local: land_id
+      foreign: id
+      type: one
+
+Settlement:
+  tableName: settlement
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    type:
+      type: integer(1)
+      notnull: true
+    country_id: integer(2)
+    name:
+      type: string(50)
+      notnull: true
+  relations:
+    Country:
+      local: country_id
+      foreign: id
+      type: one

@@ -1,0 +1,31 @@
+countryMap:
+  url:   /country
+  param: { module: map, action: country }
+  
+worldMap:
+  url:   /world
+  param: { module: map, action: world }
+
+login:
+  url:   /login
+  param: { module: user, action: login}
+  
+register:
+  url:   /register
+  param: { module: user, action: register }
+  
+logout:
+  url:   /logout
+  param: { module: user, action: logout }
+
+# default rules
+homepage:
+  url:   /
+  param: { module: map, action: country }
+
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*

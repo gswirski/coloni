@@ -1,0 +1,33 @@
+Route:
+  tableName: route
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+
+RouteSettlement:
+  tableName: route_settlement
+  columns:
+    route_id:
+      type: integer(4)
+      primary: true
+    settlement_id:
+      type: integer(4)
+      primary: true
+    which:
+      type: integer(1)
+      notnull: true
+    can_raise:
+      type: integer(1)
+      default: '1'
+      notnull: true
+  relations:
+    Route:
+      local: route_id
+      foreign: id
+      type: one
+    Settlement:
+      local: settlement_id
+      foreign: id
+      type: one

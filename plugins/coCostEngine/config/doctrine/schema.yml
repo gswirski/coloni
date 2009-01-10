@@ -1,0 +1,21 @@
+BuildingCost:
+  tableName: building_cost
+  columns:
+    resource_id:
+      type: integer(1)
+      primary: true
+    building_id:
+      type: integer(1)
+      primary: true
+    value:
+      type: integer(4)
+      notnull: true
+  relations:
+    Resource:
+      local: resource_id
+      foreign: id
+      type: one
+    Building:
+      local: building_id
+      foreign: id
+      type: one

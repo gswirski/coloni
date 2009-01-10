@@ -1,0 +1,49 @@
+Building:
+  tableName: building
+  columns:
+    id:
+      type: integer(1)
+      primary: true
+      autoincrement: true
+    module_name:
+      type: string(50)
+      notnull: true
+    type:
+      type: enum
+      values: ['production', 'wall', 'village', 'city', 'square']
+      notnull: true
+
+ProductionBuilding:
+  inheritance:
+    extends: Building
+    type: column_aggregtion
+    keyField: type
+    keyValue: 'production'
+
+WallBuilding:
+  inheritance:
+    extends: Building
+    type: column_aggregtion
+    keyField: type
+    keyValue: 'wall'
+
+VillageBuilding:
+  inheritance:
+    extends: Building
+    type: column_aggregtion
+    keyField: type
+    keyValue: 'village'
+
+CityBuilding:
+  inheritance:
+    extends: Building
+    type: column_aggregtion
+    keyField: type
+    keyValue: 'city'
+
+SquareBuilding:
+  inheritance:
+    extends: Building
+    type: column_aggregtion
+    keyField: type
+    keyValue: 'square'

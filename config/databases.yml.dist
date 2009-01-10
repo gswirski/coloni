@@ -1,0 +1,9 @@
+all:
+  doctrine:
+    class: sfDoctrineDatabase
+    param:
+      dsn: 'mysql:host=localhost;dbname=coloni'
+      username: root
+      password: 
+      attributes:
+        use_native_enum: true

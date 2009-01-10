@@ -1,0 +1,42 @@
+Event:
+  tableName: event
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    type:
+      type: string(50)
+      notnull: true
+    start:
+      type: timestamp(25)
+      notnull: true
+    end:
+      type: timestamp(25)
+      notnull: true
+    is_permament:
+      type: integer(1)
+      default: '0'
+      notnull: true
+
+EventSettlement:
+  tableName: event_settlement
+  columns:
+    event_id:
+      type: integer(4)
+      primary: true
+    settlement_id:
+      type: integer(4)
+      primary: true
+    role:
+      type: string(50)
+      notnull: true
+  relations:
+    Event:
+      local: event_id
+      foreign: id
+      type: one
+    Settlement:
+      local: settlement_id
+      foreign: id
+      type: one

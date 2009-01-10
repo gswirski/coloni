@@ -1,0 +1,63 @@
+User:
+  tableName: user
+  columns:
+    id:
+      type: integer(2)
+      primary: true
+      autoincrement: true
+    login:
+      type: string(25)
+      notnull: true
+    password:
+      type: string(32)
+      notnull: true
+    mail:
+      type: string(150)
+      notnull: true
+    realname: string(100)
+    location: string(100)
+    sex:
+      type: enum
+      values: [male, female]
+    age: integer(1)
+    is_checked:
+      type: integer(1)
+      notnull: true
+      default: '0'
+  indexes:
+    user_login_unique:
+      fields: [login]
+      type: unique
+    user_mail_unique:
+      fields:  [mail]
+      type: unique
+
+UserMessage:
+  tableName: user_message
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    author_id:
+      type: integer(2)
+      notnull: true
+    receiver_id:
+      type: integer(2)
+      notnull: true
+    topic:
+      type: string(100)
+      notnull: true
+    text:
+      type: clob
+      notnull: true
+
+UserToken:
+  tableName: user_token
+  columns:
+    user_id:
+      type: integer(2)
+      primary: true
+    token:
+      type: string(32)
+      notnull: true
