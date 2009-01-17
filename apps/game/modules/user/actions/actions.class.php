@@ -19,7 +19,6 @@ class userActions extends sfActions
 		  $this->form->bind($request->getParameter('user'));
 		  if ($this->form->isValid())
 		  {
-				$this->getUser()->setAuthenticated(true);
 				$this->redirect('@homepage');
 		  }
 		}

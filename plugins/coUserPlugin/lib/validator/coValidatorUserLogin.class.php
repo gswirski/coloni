@@ -62,7 +62,7 @@ class coValidatorUserLogin extends sfValidatorSchema
     $user->setAttribute('login', $leftValue);
     $user->setAttribute('password', $rightValue);
     
-    if(!$user->isGranted())
+    if(!$user->isAuthenticated())
     {
       $error = new sfValidatorError($this, 'invalid', array(
         'left_field'  => $leftValue,
