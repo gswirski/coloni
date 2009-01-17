@@ -1,5 +1,5 @@
 <?php
 
-class myUser extends coSecurityUser
+class myUser extends coBaseUser
 {
 }

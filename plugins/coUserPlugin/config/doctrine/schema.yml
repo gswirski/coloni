@@ -51,6 +51,15 @@ UserMessage:
     text:
       type: clob
       notnull: true
+  relations:
+    User:
+      local: author_id
+      foreign: id
+      type: one
+    User:
+      local: receiver_id
+      foreign: id
+      type: one
 
 UserToken:
   tableName: user_token
@@ -61,3 +70,8 @@ UserToken:
     token:
       type: string(32)
       notnull: true
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      type: one

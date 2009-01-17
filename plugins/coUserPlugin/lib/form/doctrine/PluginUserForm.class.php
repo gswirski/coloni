@@ -43,6 +43,11 @@ abstract class PluginUserForm extends BaseUserForm
 
 	public function save($con = null) {
 		$this->values['password'] = md5(sha1($this->values['password']));
-		parent::save($con);
+		$user = parent::save($con);
+		
+		$user->UserToken[0]->token = md5(sha1($user->login . time() . '!)S@(A#*L$&T^)'));
+		$user->save();
+		
+		return $user;
 	}
 }
