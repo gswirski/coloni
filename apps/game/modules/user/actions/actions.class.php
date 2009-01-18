@@ -40,6 +40,7 @@ class userActions extends sfActions
 		  if ($this->form->isValid())
 		  {
 				$this->form->save();
+				$this->getUser()->setAuthenticated(false);
 				$this->redirect('@login');
 		  }
 		}		
