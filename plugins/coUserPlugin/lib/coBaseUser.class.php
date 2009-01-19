@@ -2,19 +2,29 @@
 
 class coBaseUser extends sfBasicSecurityUser
 { 
+  protected $isAuthChecked = 0;
+  
   public function setAuthenticated($is)
   {
     if (false === $is)
     {
       $this->attributeHolder->remove('login');
       $this->attributeHolder->remove('password');
+      $this->isAuthChecked = 0;
     }
   }
   
   public function isAuthenticated()
   {
-    $user = $this->getObject();
-    return $user ? true : false;
+    if (false === $this->isAuthChecked)
+    {
+      $user = $this->getObject();
+      return $user ? true : false;
+    }
+    else 
+    {
+      return true;
+    }
   }
   
   public function getObject()
