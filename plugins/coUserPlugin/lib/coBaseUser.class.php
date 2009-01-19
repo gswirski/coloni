@@ -19,12 +19,15 @@ class coBaseUser extends sfBasicSecurityUser
     if (!$this->isAuthChecked)
     {
       $user = $this->getObject();
-      return $user ? true : false;
+      if ($user)
+      {
+        $this->isAuthChecked = 1;
+        return true;
+      }
+      return false;
     }
-    else 
-    {
-      return true;
-    }
+    
+    return true;
   }
   
   public function getObject()
