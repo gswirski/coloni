@@ -1,1 +1,1 @@
-World!
+World: <?php echo "$x, $y"; ?>!

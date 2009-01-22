@@ -1,0 +1,12 @@
+Position:
+<?php
+for($x=-9;$x<11;$x++) {
+  for($y=-9;$y<11;$y++) {
+echo '  position_' . $x . '_' . $y . ':' . "\n";
+echo "    'x': $x \n";
+echo "    'y': $y \n";
+echo "    Land: normal \n";
+echo "\n";
+  }
+}
+?>

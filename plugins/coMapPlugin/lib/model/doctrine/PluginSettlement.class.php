@@ -5,5 +5,24 @@
  */
 abstract class PluginSettlement extends BaseSettlement
 {
-
+  public static function getMainCountryPosition($user)
+  {
+    $q = Doctrine_Query::create();
+    
+    /* $result = $q->select('u.id, c.id, s.id, f.x, f.y')
+      ->from('User u')
+      ->leftJoin('u.Country c')
+      ->leftJoin('c.Settlement s')
+      ->leftJoin('s.Field f')
+      ->where('s.type = ?', 'capital')
+      ->where('f.type = ?', 'city')
+      ->execute(); */
+    
+    $result = $q->
+      from('Settlement s')->
+      leftJoin('s.Field f')->
+      execute();
+    
+    echo $result[0];
+  }
 }

@@ -24,13 +24,35 @@ CityBuilding:
       type: one
 
 FieldBuilding:
-SettlementInvestigation:
-  tableName: settlement_investigation
+  tableName: field_building
+  columns:
+    field_id:
+      type: integer(4)
+      primary: true
+      autoincrement: false
+    building_id:
+      type: integer(1)
+      notnull: true
+    level:
+      type: integer(1)
+      notnull: true
+  relations:
+    Field:
+      local: field_id
+      foreign: id
+      type: one
+    Building:
+      local: building_id
+      foreign: id
+      type: one
+
+SettlementTechnology:
+  tableName: settlement_technology
   columns:
     settlement_id:
       type: integer(4)
       primary: true
-    investigation_id:
+    technology_id:
       type: integer(1)
       primary: true
     level:
@@ -41,8 +63,28 @@ SettlementInvestigation:
       local: settlement_id
       foreign: id
       type: one
-    Investigation:
-      local: investigation_id
+    Technology:
+      local: technology_id
+      foreign: id
+      type: one
+
+SettlementParam:
+  tableName: settlement_param
+  columns:
+    settlement_id:
+      type: integer(4)
+      primary: true
+      autoincrement: false
+    name:
+      type: varchar(25)
+      primary: true
+      autoincrement: false
+    value:
+      type: varchar(50)
+      notnull: true
+  relations:
+    Settlement:
+      local: settlement_id
       foreign: id
       type: one
 

@@ -1,10 +1,15 @@
-countryMap:
+country_map:
   url:   /country
   param: { module: map, action: country }
   
-worldMap:
+world_map:
   url:   /world
+  param: { module: map, action: world, x: default, y: default }
+
+world_map_by_position:
+  url: /world/:x/:y
   param: { module: map, action: world }
+  requirements: { x: \d+, y: \d+ }
 
 login:
   url:   /login

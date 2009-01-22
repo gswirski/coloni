@@ -9,8 +9,8 @@
   <body>
     <?php if ($sf_user->isAuthenticated()): ?>
     <ul id="menu">
-      <li><?php echo link_to('Country', '@countryMap'); ?></li>
-      <li><?php echo link_to('World', '@worldMap'); ?></li>
+      <li><?php echo link_to('Country', '@country_map'); ?></li>
+      <li><?php echo link_to('World', '@world_map'); ?></li>
       <li><?php echo link_to('Logout', '@logout'); ?></li>
     </ul>
     <?php endif; ?>

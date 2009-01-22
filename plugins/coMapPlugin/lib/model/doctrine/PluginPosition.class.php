@@ -5,5 +5,26 @@
  */
 abstract class PluginPosition extends BasePosition
 {
-
+  public static function getFirstFreePosition()
+  {
+    $q = Doctrine_Query::create();
+    
+    $q->select('p.x, p.y')
+      ->from('Position p')
+      ->where('p.is_free = ?', '1')
+      ->orderBy('ABS(p.x*p.x+p.y*p.y)')
+      ->limit(1);
+      
+    return $q->fetchOne();
+  }
+  
+  public static function useFirstFreePosition()
+  {
+    $position = self::getFirstFreePosition();
+    
+    $position->is_free = 0;
+    $position->save();
+    
+    return $position;
+  }
 }

@@ -48,6 +48,12 @@ abstract class PluginUserForm extends BaseUserForm
 		$user->UserToken[0]->token = md5(sha1($user->login . time() . '!)S@(A#*L$&T^)'));
 		$user->save();
 		
+		sfContext::getInstance()->getEventDispatcher()->notifyUntil(new sfEvent(
+    		  $this,
+    		  'user.activate',
+    		  array('user' => $user)
+    		));
+		
 		return $user;
 	}
 }

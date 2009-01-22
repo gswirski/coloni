@@ -3,6 +3,7 @@
 class coBaseUser extends sfBasicSecurityUser
 { 
   protected $isAuthChecked = 0;
+  protected $userObject = null;
   
   public function setAuthenticated($is)
   {
@@ -11,6 +12,7 @@ class coBaseUser extends sfBasicSecurityUser
       $this->attributeHolder->remove('login');
       $this->attributeHolder->remove('password');
       $this->isAuthChecked = 0;
+      $this->userObject = null;
     }
   }
   
@@ -32,12 +34,17 @@ class coBaseUser extends sfBasicSecurityUser
   
   public function getObject()
   {
-    $q = Doctrine_Query::create()
-      ->from('User u')
-      ->where('u.login = ?', $this->getAttribute('login'))
-      ->andWhere('u.password = ?', $this->getAttribute('password'));
-      
-    return $q->fetchOne();
+    if (!$this->userObject)
+    {
+      $q = Doctrine_Query::create()
+        ->from('User u')
+        ->where('u.login = ?', $this->getAttribute('login'))
+        ->andWhere('u.password = ?', $this->getAttribute('password'));
+
+      $this->userObject = $q->fetchOne();
+    }
+    
+    return $this->userObject;
   }
   
 	public function setAttribute($name, $value, $ns = null)

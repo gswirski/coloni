@@ -21,5 +21,13 @@ class mapActions extends sfActions
   
   public function executeWorld(sfWebRequest $request)
   {
+    $this->x = $request->getParameter('x');
+    $this->y = $request->getParameter('y');
+    
+    if ($this->x == 'default' or $this->y == 'default')
+    {
+      $user = $this->getUser()->getObject();
+      //Settlement::getMainCountryPosition($user);
+    }
   }
 }
