@@ -8,6 +8,8 @@ class ProjectConfiguration extends sfProjectConfiguration
 {
   public function setup()
   {
+    include_once sfConfig::get('sf_config_dir') . '/game/events.php';
+    
     $this->enableAllPluginsExcept(array('sfPropelPlugin', 'sfCompat10Plugin'));
   }
 }

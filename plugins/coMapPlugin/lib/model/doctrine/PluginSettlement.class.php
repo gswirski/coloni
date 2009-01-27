@@ -9,20 +9,85 @@ abstract class PluginSettlement extends BaseSettlement
   {
     $q = Doctrine_Query::create();
     
-    /* $result = $q->select('u.id, c.id, s.id, f.x, f.y')
-      ->from('User u')
-      ->leftJoin('u.Country c')
-      ->leftJoin('c.Settlement s')
-      ->leftJoin('s.Field f')
-      ->where('s.type = ?', 'capital')
-      ->where('f.type = ?', 'city')
-      ->execute(); */
-    
     $result = $q->
       from('Settlement s')->
       leftJoin('s.Field f')->
       execute();
     
     echo $result[0];
+  }
+  
+  public static function assignNewToCountry(Country $country, Position $position, $name, $type = 'village')
+  {
+    $settlement = $country->Settlement[count($country->Settlement)];
+    
+    $settlement->name = $name;
+    $settlement->type = $type;
+    
+    $x = $position->x * 10;
+    $y = $position->y * 10;
+    
+    $i = 0;
+    
+    $positions = array(
+      array(-1, -3),
+      array( 0, -3),
+      array( 1, -3),
+      
+      array(-2, -2),
+      array(-1, -2),
+      array( 0, -2),
+      array( 1, -2),
+      array( 2, -2),
+      
+      array(-3, -1),
+      array(-2, -1),
+      array(-1, -1),
+      array( 0, -1),
+      array( 1, -1),
+      array( 2, -1),
+      array( 3, -1),
+      
+      array(-3, 0),
+      array(-2, 0),
+      array(-1, 0),
+      array( 0, 0),
+      array( 1, 0),
+      array( 2, 0),
+      array( 3, 0),
+      
+      array(-3, 1),
+      array(-2, 1),
+      array(-1, 1),
+      array( 0, 1),
+      array( 1, 1),
+      array( 2, 1),
+      array( 3, 1),
+      
+      array(-2, 2),
+      array(-1, 2),
+      array( 0, 2),
+      array( 1, 2),
+      array( 2, 2),
+      
+      array(-1, 3),
+      array( 0, 3),
+      array( 1, 3)
+    );
+    
+    foreach ($positions as $position)
+    {
+      $settlement->Field[$i]->x = $x + $position[0];
+      $settlement->Field[$i]->y = $y + $position[1];
+      if ($position[0] == 0 and $position[1] == 0)
+      {
+        $settlement->Field[$i]->type = 'city';
+      }
+      else
+      {
+        $settlement->Field[$i]->type = 'blank';
+      }
+      $i++;
+    }
   }
 }

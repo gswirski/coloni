@@ -27,4 +27,56 @@ abstract class PluginPosition extends BasePosition
     
     return $position;
   }
+  
+  public static function getObject($x, $y)
+  {
+    if ($x <= 0 or $y <= 0)
+    {
+      $user = sfContext::getInstance()->getUser();
+      $user = $user->getObject();
+      
+      $q = Doctrine_Query::create()
+        ->from('User u')
+        ->leftJoin('u.Country c')
+        ->leftJoin('c.Settlement s')
+        ->leftJoin('s.Field f')
+        ->where('u.id = ?', $user->id)
+        ->andWhere('f.type = ?', 'city')
+        ->fetchOne();
+      $x = floor($q->Country[0]->Settlement[0]->Field[0]->x / 10);
+      $y = floor($q->Country[0]->Settlement[0]->Field[0]->y / 10);
+    }
+    
+    $position = Doctrine_Query::create()
+      ->from('Position p')
+      ->where('x = ?', $x)
+      ->andWhere('y = ?', $y)
+      ->fetchOne();
+    
+    return $position;
+  }
+  
+  public function listSettlementsOnArea($width, $height)
+  {
+    $field_x = $this->x * 10;
+    $field_y = $this->y * 10;
+    
+    $leftMargin = ($width - 1) / 2;
+    $rigthMargin = $leftMargin + 1;
+    
+    $topMargin = ($height - 1) / 2;
+    $bottomMargin = $topMargin + 1;
+    
+    $settlements = Doctrine_Query::create()
+      ->from('Field f')
+      ->leftJoin('f.Settlement s')
+         ->where('f.x > ?', $field_x - $leftMargin * 10 - 7)
+      ->andWhere('f.x < ?', $field_x + $rigthMargin * 10 + 6)
+      ->andWhere('f.y > ?', $field_y - $topMargin * 10 - 7)
+      ->andWhere('f.y < ?', $field_y + $bottomMargin * 10 + 6)
+      ->andWhere('f.type = ?', 'city')
+      ->execute();
+      
+    return $settlements;
+  }
 }

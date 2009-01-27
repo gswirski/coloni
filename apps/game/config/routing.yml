@@ -9,7 +9,7 @@ world_map:
 world_map_by_position:
   url: /world/:x/:y
   param: { module: map, action: world }
-  requirements: { x: \d+, y: \d+ }
+  requirements: { x: -?\d+, y: -?\d+ }
 
 login:
   url:   /login

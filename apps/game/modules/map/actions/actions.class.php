@@ -17,17 +17,16 @@ class mapActions extends sfActions
   */
   public function executeCountry(sfWebRequest $request)
   {
+    $this->list = $this->getUser()->getObject()->Country[0]->listSettlements();
   }
   
   public function executeWorld(sfWebRequest $request)
-  {
-    $this->x = $request->getParameter('x');
-    $this->y = $request->getParameter('y');
+  { 
+    $position = Position::getObject($request->getParameter('x'), $request->getParameter('y'));
     
-    if ($this->x == 'default' or $this->y == 'default')
-    {
-      $user = $this->getUser()->getObject();
-      //Settlement::getMainCountryPosition($user);
-    }
+    $this->x = $position->x;
+    $this->y = $position->y;
+    
+    $this->map_data = $position->listSettlementsOnArea(3, 3);
   }
 }
