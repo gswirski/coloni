@@ -30,7 +30,7 @@ abstract class PluginPosition extends BasePosition
   
   public static function getObject($x, $y)
   {
-    if ($x <= 0 or $y <= 0)
+    if ($x == 'default' or $y == 'default')
     {
       $user = sfContext::getInstance()->getUser();
       $user = $user->getObject();
