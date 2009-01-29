@@ -1,3 +1,8 @@
+settlement:
+  url:   /settlement/:id
+  param: { module: settlement, action: fields }
+  requirements: { id: \d+ }
+
 country_map:
   url:   /country
   param: { module: map, action: country }

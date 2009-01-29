@@ -40,6 +40,6 @@ abstract class PluginCountry extends BaseCountry
       ->leftJoin('c.Settlement s')
       ->where('c.id = ?', $this->id);
       
-    return $q->execute();
+    return $q->fetchOne()->Settlement;
   }
 }

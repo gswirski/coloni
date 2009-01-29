@@ -1,4 +1,4 @@
 <h3>Country!</h3>
-<?php foreach ($list as $country) : ?>
-<?php echo $country->Settlement[0]->name . "\n"; ?><br />
+<?php foreach ($list as $settlement) : ?>
+  <?php echo link_to($settlement, "@settlement?id={$settlement->id}"); ?>
 <?php endforeach; ?>
