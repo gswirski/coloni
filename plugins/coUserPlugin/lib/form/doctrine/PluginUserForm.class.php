@@ -32,7 +32,8 @@ abstract class PluginUserForm extends BaseUserForm
     			array(),
     			array('invalid' => 'Podane hasła muszą być identyczne')
     		),
-    		$this->validatorSchema->getPostValidator()
+    		new sfValidatorDoctrineUnique(array('model' => 'User', 'column' => array('login'))),
+        new sfValidatorDoctrineUnique(array('model' => 'User', 'column' => array('mail'))),
 		  ))
 		);
 		
