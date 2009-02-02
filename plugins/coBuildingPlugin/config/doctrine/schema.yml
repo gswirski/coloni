@@ -13,37 +13,86 @@ Building:
       values: ['production', 'wall', 'village', 'city', 'square']
       notnull: true
 
-ProductionBuilding:
+BuildingProduction:
   inheritance:
     extends: Building
     type: column_aggregtion
     keyField: type
     keyValue: 'production'
 
-WallBuilding:
+BuildingWall:
   inheritance:
     extends: Building
     type: column_aggregtion
     keyField: type
     keyValue: 'wall'
 
-VillageBuilding:
+BuildingVillage:
   inheritance:
     extends: Building
     type: column_aggregtion
     keyField: type
     keyValue: 'village'
 
-CityBuilding:
+BuildingCity:
   inheritance:
     extends: Building
     type: column_aggregtion
     keyField: type
     keyValue: 'city'
 
-SquareBuilding:
+BuildingSquare:
   inheritance:
     extends: Building
     type: column_aggregtion
     keyField: type
     keyValue: 'square'
+
+CityBuilding:
+  tableName: city_building
+  columns:
+    settlement_id:
+      type: integer(4)
+      primary: true
+    building_id:
+      type: integer(1)
+      primary: true
+    position:
+      type: integer(1)
+      notnull: true
+    level:
+      type: integer(1)
+      notnull: true
+  relations:
+    Settlement:
+      local: settlement_id
+      foreign: id
+      type: one
+    Building:
+      local: building_id
+      foreign: id
+      type: one
+
+FieldBuilding:
+  tableName: field_building
+  columns:
+    field_id:
+      type: integer(4)
+      primary: true
+      autoincrement: false
+    building_id:
+      type: integer(1)
+      notnull: true
+    level:
+      type: integer(1)
+      notnull: true
+  relations:
+    Field:
+      local: field_id
+      foreign: id
+      type: one
+    Building:
+      local: building_id
+      foreign: id
+      type: one
+

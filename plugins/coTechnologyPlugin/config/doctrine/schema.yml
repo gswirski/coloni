@@ -8,3 +8,25 @@ Technology:
     module_name:
       type: string(50)
       notnull: true
+
+SettlementTechnology:
+  tableName: settlement_technology
+  columns:
+    settlement_id:
+      type: integer(4)
+      primary: true
+    technology_id:
+      type: integer(1)
+      primary: true
+    level:
+      type: integer(1)
+      notnull: true
+  relations:
+    Settlement:
+      local: settlement_id
+      foreign: id
+      type: one
+    Technology:
+      local: technology_id
+      foreign: id
+      type: one

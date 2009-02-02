@@ -33,3 +33,28 @@ RatingResource:
     type: column_aggregtion
     keyField: type
     keyValue: 'rating'
+
+SettlementResource:
+  tableName: settlement_resource
+  columns:
+    settlement_id:
+      type: integer(4)
+      primary: true
+    resource_id:
+      type: integer(1)
+      primary: true
+    production:
+      type: integer(2)
+      notnull: true
+    count:
+      type: integer(4)
+      notnull: true
+  relations:
+    Settlement:
+      local: settlement_id
+      foreign: id
+      type: one
+    Resource:
+      local: resource_id
+      foreign: id
+      type: one
