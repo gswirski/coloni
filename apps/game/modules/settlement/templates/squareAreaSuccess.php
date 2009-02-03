@@ -1,0 +1,1 @@
+<h3><?php echo $settlement; ?> - square area</h3>

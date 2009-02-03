@@ -1,3 +1,23 @@
+settlement_production_area:
+  url:   /settlement/:id/production
+  param: { module: settlement, action: productionArea }
+  requirements: { id: \d+ }
+  
+settlement_defences_area:
+  url:   /settlement/:id/defences
+  param: { module: settlement, action: defencesArea }
+  requirements: { id: \d+ }
+
+settlement_city_area:
+  url:   /settlement/:id/city
+  param: { module: settlement, action: cityArea }
+  requirements: { id: \d+ }
+
+settlement_square_area:
+  url:   /settlement/:id/square
+  param: { module: settlement, action: squareArea }
+  requirements: { id: \d+ }
+
 found_settlement:
   url:   /settlement/:id/found_new
   param: { module: settlement, action: found }
@@ -6,7 +26,7 @@ found_settlement:
 
 settlement:
   url:   /settlement/:id
-  param: { module: settlement, action: resources }
+  param: { module: settlement, action: productionArea }
   requirements: { id: \d+ }
 
 country_map:

@@ -10,7 +10,22 @@
  */
 class settlementActions extends sfActions
 {
-  public function executeResources(sfWebRequest $request)
+  public function executeProductionArea(sfWebRequest $request)
+  {
+    $this->settlement = Doctrine::getTable('Settlement')->find($request->getParameter('id'));
+  }
+  
+  public function executeDefencesArea(sfWebRequest $request)
+  {
+    $this->settlement = Doctrine::getTable('Settlement')->find($request->getParameter('id'));
+  }
+  
+  public function executeCityArea(sfWebRequest $request)
+  {
+    $this->settlement = Doctrine::getTable('Settlement')->find($request->getParameter('id'));
+  }
+  
+  public function executeSquareArea(sfWebRequest $request)
   {
     $this->settlement = Doctrine::getTable('Settlement')->find($request->getParameter('id'));
   }

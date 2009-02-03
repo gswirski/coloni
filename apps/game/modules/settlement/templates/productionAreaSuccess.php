@@ -9,10 +9,10 @@
 <hr />
 <p>
   Select area: 
-  <a href="">Production</a>, 
-  <a href="">Defences</a>, 
-  <a href="">City</a>, 
-  <a href="">Square</a>
+  <?php echo link_to('Production', "@settlement_production_area?id={$settlement->id}"); ?>, 
+  <?php echo link_to('Defences', "@settlement_defences_area?id={$settlement->id}"); ?>, 
+  <?php echo link_to('City', "@settlement_city_area?id={$settlement->id}"); ?>, 
+  <?php echo link_to('Square', "@settlement_square_area?id={$settlement->id}"); ?>
 <p>
 
 <?php foreach($settlement->Field as $field) : ?>
