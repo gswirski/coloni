@@ -5,7 +5,7 @@ resource:
         production_per_step: 10
         step_size: 100
       civilization:
-        bonus: 10
+        bonus: 0.1
         step_size: 50
   wood:
     buildings:
@@ -13,7 +13,7 @@ resource:
         production: 100
         production_quotient: 1.1
       sawmill:
-        bonus: 50
+        bonus: 0.5
   stone:
   iron:
   gold:
@@ -23,5 +23,5 @@ resource:
         production: 50
         production_quotient: 2
       lumbermill:
-        bonus: 10
-        bonus_qutient: 2
+        bonus: 0.1
+        bonus_quotient: 2
