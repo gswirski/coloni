@@ -1,6 +1,12 @@
+found_settlement:
+  url:   /settlement/:id/found_new
+  param: { module: settlement, action: found }
+  requirements: 
+    id: \d+
+
 settlement:
   url:   /settlement/:id
-  param: { module: settlement, action: fields }
+  param: { module: settlement, action: resources }
   requirements: { id: \d+ }
 
 country_map:

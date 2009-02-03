@@ -27,3 +27,10 @@ a {
 a:hover {
 	color: #21a1ef;
 }
+
+hr {
+	border-top: 1px solid #AAA;
+	border-bottom: none;
+	border-left: none;
+	border-right: none;
+}

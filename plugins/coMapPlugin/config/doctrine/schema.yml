@@ -41,6 +41,10 @@ Field:
       local: settlement_id
       foreign: id
       type: one
+  indexes:
+    field_position_unique:
+      fields: ['x', 'y']
+      type: unique
 
 Land:
   tableName: land
@@ -90,8 +94,15 @@ Settlement:
     name:
       type: string(50)
       notnull: true
+    parent_settlement:
+      type: integer(4)
   relations:
     Country:
       local: country_id
+      foreign: id
+      type: one
+    ParentSettlement:
+      local: parent_settlement
+      class: Settlement
       foreign: id
       type: one

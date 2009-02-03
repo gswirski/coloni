@@ -5,89 +5,136 @@
  */
 abstract class PluginSettlement extends BaseSettlement
 {
-  public static function getMainCountryPosition($user)
+  public function getPosition()
   {
-    $q = Doctrine_Query::create();
-    
-    $result = $q->
-      from('Settlement s')->
-      leftJoin('s.Field f')->
-      execute();
-    
-    echo $result[0];
+    return Doctrine_Query::create()
+      ->select('f.x, f.y')
+      ->from('Field f')
+      ->leftJoin('f.Settlement s')
+      ->where('s.id = ?', $this->id)
+      ->andWhere('f.type = ?', 'city')
+      ->fetchOne();
   }
   
-  public static function assignNewToCountry(Country $country, Position $position, $name, $type = 'village')
-  {
-    $settlement = $country->Settlement[count($country->Settlement)];
+  public static function foundNew(Country $country, $position, $name = '', $type = 'village', $parentSettlement = null)
+  {  
+    if (!$name) {
+      $name = "New $type";
+    }
     
+    $settlement = new Settlement();
     $settlement->name = $name;
     $settlement->type = $type;
     
-    $x = $position->x * 10;
-    $y = $position->y * 10;
+    if($parentSettlement instanceof Settlement)
+    {
+      $settlement->ParentSettlement = $parentSettlement;
+    }
     
     $i = 0;
     
-    $positions = array(
-      array(-1, -3),
-      array( 0, -3),
-      array( 1, -3),
-      
-      array(-2, -2),
-      array(-1, -2),
-      array( 0, -2),
-      array( 1, -2),
-      array( 2, -2),
-      
-      array(-3, -1),
-      array(-2, -1),
-      array(-1, -1),
-      array( 0, -1),
-      array( 1, -1),
-      array( 2, -1),
-      array( 3, -1),
-      
-      array(-3, 0),
-      array(-2, 0),
-      array(-1, 0),
-      array( 0, 0),
-      array( 1, 0),
-      array( 2, 0),
-      array( 3, 0),
-      
-      array(-3, 1),
-      array(-2, 1),
-      array(-1, 1),
-      array( 0, 1),
-      array( 1, 1),
-      array( 2, 1),
-      array( 3, 1),
-      
-      array(-2, 2),
-      array(-1, 2),
-      array( 0, 2),
-      array( 1, 2),
-      array( 2, 2),
-      
-      array(-1, 3),
-      array( 0, 3),
-      array( 1, 3)
-    );
+    $fieldList = self::getSettlementFieldList($position['x'], $position['y']);
     
-    foreach ($positions as $position)
+    foreach ($fieldList as $x => $tempFieldList)
     {
-      $settlement->Field[$i]->x = $x + $position[0];
-      $settlement->Field[$i]->y = $y + $position[1];
-      if ($position[0] == 0 and $position[1] == 0)
+      foreach ($tempFieldList as $y => $type)
       {
-        $settlement->Field[$i]->type = 'city';
+        $settlement->Field[$i]->x = $x + $position['x'];
+        $settlement->Field[$i]->y = $y + $position['y'];
+        $settlement->Field[$i]->type = $type;
+        $i++;
       }
-      else
-      {
-        $settlement->Field[$i]->type = 'blank';
-      }
-      $i++;
     }
+    
+    $country->Settlement[] = $settlement;
+  }
+  
+  protected static function getSettlementFieldList($x, $y)
+  {
+    $fieldList = self::getFieldList();
+    $usedList = self::getUsedFieldList($x, $y);
+    
+    foreach ($usedList as $used)
+    {
+      unset($fieldList[$used->x - $x][$used->y - $y]);
+    }
+    
+    foreach ($fieldList as $key => $value)
+    {
+      if (!$value)
+      {
+        unset($fieldList[$key]);
+      }
+    }
+    
+    return $fieldList;
+  }
+  
+  protected static function getFieldList()
+  {
+    return array(
+      '-3' => array(
+        '-1' => 'blank',
+        '0'  => 'blank',
+        '1'  => 'blank'
+      ),
+      '-2' => array(
+        '-2' => 'blank',
+        '-1' => 'blank',
+        '0'  => 'blank',
+        '1'  => 'blank',
+        '2'  => 'blank'
+      ),
+      '-1' => array(
+        '-3' => 'blank',
+        '-2' => 'blank',
+        '-1' => 'blank',
+        '0'  => 'blank',
+        '1'  => 'blank',
+        '2'  => 'blank',
+        '3'  => 'blank'
+      ),
+      '0' => array(
+        '-3' => 'blank',
+        '-2' => 'blank',
+        '-1' => 'blank',
+        '0'  => 'city',
+        '1'  => 'blank',
+        '2'  => 'blank',
+        '3'  => 'blank'
+      ),
+      '1' => array(
+        '-3' => 'blank',
+        '-2' => 'blank',
+        '-1' => 'blank',
+        '0'  => 'blank',
+        '1'  => 'blank',
+        '2'  => 'blank',
+        '3'  => 'blank'
+      ),
+      '2' => array(
+        '-2' => 'blank',
+        '-1' => 'blank',
+        '0'  => 'blank',
+        '1'  => 'blank',
+        '2'  => 'blank'
+      ),
+      '3' => array(
+        '-1' => 'blank',
+        '0'  => 'blank',
+        '1'  => 'blank'
+      )
+    );
+  }
+  
+  protected static function getUsedFieldList($x, $y)
+  {
+    $q = Doctrine_Query::create()
+      ->select('f.x, f.y')
+      ->from('Field f')
+      ->where("sqrt(abs((x - $x) * (x - $x) + (y - $y) * (y - $y))) < 3.17")
+      ->orderby('f.id')
+      ->execute();
+    return $q;
   }
 }

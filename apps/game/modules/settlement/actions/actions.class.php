@@ -10,8 +10,27 @@
  */
 class settlementActions extends sfActions
 {
-  public function executeFields(sfWebRequest $request)
+  public function executeResources(sfWebRequest $request)
   {
     $this->settlement = Doctrine::getTable('Settlement')->find($request->getParameter('id'));
+  }
+  
+  public function executeFound(sfWebRequest $request)
+  {
+    $this->settlement = Doctrine::getTable('Settlement')->find($request->getParameter('id'));
+    $this->form = new NewSettlementCoordsForm(array(), array('position' => $this->settlement->position));
+    
+    if ($request->isMethod('post'))
+    {
+		  $this->form->bind($request->getParameter('coords'));
+      if ($this->form->isValid())
+      {
+        $country = $this->settlement->Country;
+        Settlement::foundNew($country, $this->form->getValues(), '', 'village', $this->settlement);
+        $country->save();
+        
+        $this->redirect("@country_map");
+      }
+    }
   }
 }

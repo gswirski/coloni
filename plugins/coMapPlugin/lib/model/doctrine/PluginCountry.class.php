@@ -16,21 +16,21 @@ abstract class PluginCountry extends BaseCountry
     $name = "Capital of {$country->name}";
     $type = 'capital';
     
-    $country->createSettlement($position, $name, $type);
+    $country->foundCapital($position, $name);
     
     $user->Country[0] = $country;
      
     $user->save();
   }
   
-  public function createSettlement($position, $name = '', $type = 'village')
+  public function foundCapital($position, $name = '')
   {
-    if (!$name)
-    {
-      $name = 'New ' . $village;
-    }
+    $position = array(
+      'x' => $position->x * 10,
+      'y' => $position->y * 10
+    );
     
-    Settlement::assignNewToCountry($this, $position, $name, $type);
+    Settlement::foundNew($this, $position, $name, 'capital');
   }
   
   public function listSettlements()
