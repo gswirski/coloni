@@ -16,5 +16,7 @@
 <p>
 
 <?php foreach($settlement->Field as $field) : ?>
-  <?php echo "Field {$field->id} - {$field->type}"; ?><br />
+  <?php echo link_to(
+    "Field {$field->id}", 
+    "@settlement_production_field?settlement_id={$settlement->id}&field_id={$field->id}") ."- {$field->type}"; ?><br />
 <?php endforeach; ?>

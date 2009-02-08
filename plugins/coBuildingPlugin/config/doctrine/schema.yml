@@ -12,6 +12,12 @@ Building:
       type: enum
       values: ['production', 'wall', 'village', 'city', 'square']
       notnull: true
+    title:
+      type: string(150)
+      notnull: true
+    description:
+      type: clob
+      notnull: true
 
 BuildingProduction:
   inheritance:
@@ -86,6 +92,10 @@ FieldBuilding:
     level:
       type: integer(1)
       notnull: true
+    efficiency:
+      type: float
+      notnull: true
+      default: 1
   relations:
     Field:
       local: field_id
@@ -95,4 +105,3 @@ FieldBuilding:
       local: building_id
       foreign: id
       type: one
-

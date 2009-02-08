@@ -21,14 +21,83 @@ Event:
 
 EventSettlement:
   tableName: event_settlement
+  columns:  
+    settlement_id:
+      type: integer(4)
+      primary: true
+    event_id:
+      type: integer(4)
+      primary: true
+    role:
+      type: string(50)
+      notnull: true
+  relations:    
+    Settlement:
+      local: settlement_id
+      foreign: id
+      type: one
+    Event:
+      local: event_id
+      foreign: id
+      type: one
+
+EventPermament:
+  tableName: event_permament
   columns:
     event_id:
       type: integer(4)
       primary: true
-    settlement_id:
+      autoincrement: false
+    duration:
+      type: integer(4)
+      notnull: true
+    delay:
+      type: integer(4)
+      notnull: true
+  relations:
+    Event:
+      local: event_id
+      foreign: id
+      type: one
+
+EventBuildField:
+  tableName: event_build_field
+  columns:
+    event_id:
       type: integer(4)
       primary: true
-    role:
+      autoincrement: false
+    field_id:
+      type: integer(4)
+      notnull: true
+    building_id:
+      type: integer(1)
+      notnull: true
+  relations:
+    Event:
+      local: event_id
+      foreign: id
+      type: one
+    Field:
+      local: field_id
+      foreign: id
+      type: one
+    Building:
+      local: building_id
+      foreign: id
+      type: one
+
+EventTerraform:
+  tableName: event_terraform
+  columns:
+    event_id:
+      type: integer(4)
+      primary: true
+      autoincrement: false
+    field_id:
+      type: integer(4)
+      notnull: true
+    new_type:
       type: string(50)
       notnull: true
   relations:
@@ -36,7 +105,50 @@ EventSettlement:
       local: event_id
       foreign: id
       type: one
-    Settlement:
-      local: settlement_id
+    Field:
+      local: field_id
+      foreign: id
+      type: one
+
+EventBuildCity:
+  tableName: event_build_city
+  columns:
+    event_id:
+      type: integer(4)
+      primary: true
+      autoincrement: false
+    position:
+      type: integer(1)
+      notnull: true
+    building_id:
+      type: integer(1)
+      notnull: true
+  relations:
+    Event:
+      local: event_id
+      foreign: id
+      type: one
+    Building:
+      local: building_id
+      foreign: id
+      type: one
+
+EventTechnology:
+  tableName: event_technology
+  columns:
+    event_id:
+      type: integer(4)
+      primary: true
+      autoincrement: false
+    technology_id:
+      type: integer(1)
+      notnull: true
+  relations:
+    Event:
+      local: event_id
+      foreign: id
+      type: one
+    Technology:
+      local: technology_id
       foreign: id
       type: one

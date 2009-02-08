@@ -48,4 +48,22 @@ class settlementActions extends sfActions
       }
     }
   }
+
+  public function executeProductionField(sfWebRequest $request)
+  {
+    sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent(
+      $this,
+      'settlement.build'
+    ));
+    
+    if ($request->isMethod('post'))
+    {
+      $field = Doctrine::getTable('Field')->find($request->getParameter('field_id'));
+      print_r($field);
+    } 
+    else 
+    {
+      $this->buildings = coBuilding::getBuildingsMetaAtView('production');
+    }
+  }
 }

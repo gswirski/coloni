@@ -1,0 +1,6 @@
+Building:
+  wood_cutter:
+    module_name: WoodCutter
+    type:        production
+    title:       Wood Cutter
+    description: Produces wood

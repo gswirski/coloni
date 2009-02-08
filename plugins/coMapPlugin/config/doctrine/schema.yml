@@ -16,7 +16,7 @@ Country:
       type: one
 
 Field:
-  tableName: field
+  tableName: map_field
   columns:
     id:
       type: integer(4)

@@ -1,3 +1,8 @@
+settlement_production_field:
+  url:    /settlement/:settlement_id/production/:field_id
+  param: { module: settlement, action: productionField }
+  requirements: { settlement_id: \d+, field_id: \d+ }
+
 settlement_production_area:
   url:   /settlement/:id/production
   param: { module: settlement, action: productionArea }

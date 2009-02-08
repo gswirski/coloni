@@ -8,6 +8,12 @@ Technology:
     module_name:
       type: string(50)
       notnull: true
+    title:
+      type: string(150)
+      notnull: true
+    description:
+      type: clob
+      notnull: true
 
 SettlementTechnology:
   tableName: settlement_technology
