@@ -59,11 +59,10 @@ class settlementActions extends sfActions
     if ($request->isMethod('post'))
     {
       $field = Doctrine::getTable('Field')->find($request->getParameter('field_id'));
-      print_r($field);
     } 
     else 
     {
-      $this->buildings = coBuilding::getBuildingsMetaAtView('production');
+      $this->buildings = Building::getBuildingsMetaAtView('production');
     }
   }
 }
