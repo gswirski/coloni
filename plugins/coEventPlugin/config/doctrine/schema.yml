@@ -47,8 +47,6 @@ EventPermament:
   columns:
     event_id:
       type: integer(4)
-      primary: true
-      autoincrement: false
     duration:
       type: integer(4)
       notnull: true
@@ -68,8 +66,6 @@ EventBuildField:
   columns:
     event_id:
       type: integer(4)
-      primary: true
-      autoincrement: false
     field_id:
       type: integer(4)
       notnull: true
@@ -78,6 +74,9 @@ EventBuildField:
       notnull: true
   relations:
     Event:
+      local: event_id
+      foreign: id
+      type: one
       foreignType: one
       onDelete: CASCADE
     Field:
@@ -94,8 +93,6 @@ EventTerraform:
   columns:
     event_id:
       type: integer(4)
-      primary: true
-      autoincrement: false
     field_id:
       type: integer(4)
       notnull: true
@@ -119,8 +116,6 @@ EventBuildCity:
   columns:
     event_id:
       type: integer(4)
-      primary: true
-      autoincrement: false
     position:
       type: integer(1)
       notnull: true
@@ -144,8 +139,6 @@ EventTechnology:
   columns:
     event_id:
       type: integer(4)
-      primary: true
-      autoincrement: false
     technology_id:
       type: integer(1)
       notnull: true
