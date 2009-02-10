@@ -12,27 +12,30 @@ class settlementActions extends sfActions
 {
   public function executeProductionArea(sfWebRequest $request)
   {
-    $this->settlement = Doctrine::getTable('Settlement')->find($request->getParameter('id'));
+    $this->getUser()->setSettlement($request->getParameter('id'));
+    $this->settlement = $this->getUser()->getSettlement();
   }
   
   public function executeDefencesArea(sfWebRequest $request)
   {
-    $this->settlement = Doctrine::getTable('Settlement')->find($request->getParameter('id'));
-  }
+    $this->getUser()->setSettlement($request->getParameter('id'));
+    $this->settlement = $this->getUser()->getSettlement();  }
   
   public function executeCityArea(sfWebRequest $request)
   {
-    $this->settlement = Doctrine::getTable('Settlement')->find($request->getParameter('id'));
-  }
+    $this->getUser()->setSettlement($request->getParameter('id'));
+    $this->settlement = $this->getUser()->getSettlement();  }
   
   public function executeSquareArea(sfWebRequest $request)
   {
-    $this->settlement = Doctrine::getTable('Settlement')->find($request->getParameter('id'));
-  }
+    $this->getUser()->setSettlement($request->getParameter('id'));
+    $this->settlement = $this->getUser()->getSettlement();  }
   
   public function executeFound(sfWebRequest $request)
   {
-    $this->settlement = Doctrine::getTable('Settlement')->find($request->getParameter('id'));
+    $this->getUser()->setSettlement($request->getParameter('id'));
+    $this->settlement = $this->getUser()->getSettlement();
+    
     $this->form = new NewSettlementCoordsForm(array(), array('position' => $this->settlement->position));
     
     if ($request->isMethod('post'))
@@ -58,7 +61,16 @@ class settlementActions extends sfActions
     
     if ($request->isMethod('post'))
     {
-      $field = Doctrine::getTable('Field')->find($request->getParameter('field_id'));
+      $this->getUser()->setSettlement($request->getParameter('settlement_id'));
+      
+      $settlement = $this->getUser()->getSettlement()->id;
+      $field = $request->getParameter('field_id');
+      $building = $request->getParameter('building_id');
+      
+      $event = new coEventBuildField($building, $field, $settlement);
+      coEventFactory::register($event);
+      
+      $this->redirect("@settlement?id={$settlement}");
     } 
     else 
     {

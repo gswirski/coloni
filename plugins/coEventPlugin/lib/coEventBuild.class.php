@@ -1,6 +1,6 @@
 <?php
 
-class coEventBuild extends coEvent
+abstract class coEventBuild extends coEvent
 {
-  
+  protected $_data;
 }

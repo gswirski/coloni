@@ -4,6 +4,7 @@ class coBaseUser extends sfBasicSecurityUser
 { 
   protected $isAuthChecked = 0;
   protected $userObject = null;
+  protected $settlementObject = null;
   
   public function setAuthenticated($is)
   {
@@ -55,5 +56,21 @@ class coBaseUser extends sfBasicSecurityUser
 		}
 		
 		parent::setAttribute($name, $value, $ns = null);
+	}
+	
+	public function setSettlement($settlement_id)
+	{
+	  $this->setAttribute('settlement', $settlement_id);
+	}
+	
+	public function getSettlement()
+	{
+	  if (!$this->settlementObject)
+	  {
+	    $this->settlementObject = Doctrine::getTable('Settlement')->find(
+	      $this->getAttribute('settlement')
+	    );
+	  }
+	  return $this->settlementObject;
 	}
 }
