@@ -9,11 +9,20 @@ class coEventFilter extends sfFilter
     
     foreach ($events as $event)
     {
-      $duration = $event->end - time();
-      echo 'Duration: ' . $duration . "<br />";
+      if ($event->end < time())
+      {
+        $executor = 'coEvent' . $event['type'];
+        $executor = new $executor;
+        $executor->execute($event);
+        echo 'Has been built. <br />';
+        
+        $event->delete();
+      }
+      else
+      {
+        echo $event->end - time() . ' seconds left. <br />';
+      }
     }
-    
-    $this->garbageCollect($events);
     
     $filterChain->execute();
   }
@@ -30,16 +39,5 @@ class coEventFilter extends sfFilter
       ->where('es.settlement_id = ?', $settlement->id)
       ->orderBy('e.end')
       ->execute();
-  }
-  
-  protected function garbageCollect($events)
-  {
-    foreach ($events as $event)
-    {
-      if ($event->end < time())
-      {
-        $event->delete();
-      }
-    }
   }
 }

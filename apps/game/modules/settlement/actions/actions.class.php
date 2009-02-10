@@ -67,7 +67,7 @@ class settlementActions extends sfActions
       $field = $request->getParameter('field_id');
       $building = $request->getParameter('building_id');
       
-      $event = new coEventBuildField($building, $field, $settlement);
+      $event = coEventBuildField::create($building, $field, $settlement);
       coEventFactory::register($event);
       
       $this->redirect("@settlement?id={$settlement}");
