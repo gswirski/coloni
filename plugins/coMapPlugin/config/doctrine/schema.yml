@@ -96,6 +96,9 @@ Settlement:
       notnull: true
     parent_settlement:
       type: integer(4)
+    last_checked:
+      type: integer(4)
+      notnull: true
   relations:
     Country:
       local: country_id
@@ -104,5 +107,28 @@ Settlement:
     ParentSettlement:
       local: parent_settlement
       class: Settlement
+      foreign: id
+      type: one
+
+EventTerraform:
+  tableName: event_terraform
+  columns:
+    event_id:
+      type: integer(4)
+    field_id:
+      type: integer(4)
+      notnull: true
+    new_type:
+      type: string(50)
+      notnull: true
+  relations:
+    Event:
+      local: event_id
+      foreign: id
+      type: one
+      foreignType: one
+      onDelete: CASCADE
+    Field:
+      local: field_id
       foreign: id
       type: one

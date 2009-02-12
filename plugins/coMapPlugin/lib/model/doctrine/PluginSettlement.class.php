@@ -46,6 +46,8 @@ abstract class PluginSettlement extends BaseSettlement
       }
     }
     
+    $settlement->last_checked = time();
+    
     $country->Settlement[] = $settlement;
   }
   

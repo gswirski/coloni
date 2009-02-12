@@ -105,3 +105,53 @@ FieldBuilding:
       local: building_id
       foreign: id
       type: one
+
+EventBuildField:
+  tableName: event_build_field
+  columns:
+    event_id:
+      type: integer(4)
+    field_id:
+      type: integer(4)
+      notnull: true
+    building_id:
+      type: integer(1)
+      notnull: true
+  relations:
+    Event:
+      local: event_id
+      foreign: id
+      type: one
+      foreignType: one
+      onDelete: CASCADE
+    Field:
+      local: field_id
+      foreign: id
+      type: one
+    Building:
+      local: building_id
+      foreign: id
+      type: one
+
+EventBuildCity:
+  tableName: event_build_city
+  columns:
+    event_id:
+      type: integer(4)
+    position:
+      type: integer(1)
+      notnull: true
+    building_id:
+      type: integer(1)
+      notnull: true
+  relations:
+    Event:
+      local: event_id
+      foreign: id
+      type: one
+      foreignType: one
+      onDelete: CASCADE
+    Building:
+      local: building_id
+      foreign: id
+      type: one
