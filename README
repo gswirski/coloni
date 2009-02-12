@@ -5,10 +5,11 @@ file.php.dist => file.php
 (it should be there as default, but keep watch on where you keep pear!)
 3. Set database user in databases.yml(previously databases.yml.dist)
 4. Open terminal and navigate to this project
-5. Run 'chmod 777 cache log web/uploads' command
-6. Run 'rm -rf cache/*' command
-7. Run 'php symfony doctrine:build-all-reload' command
-8. Add following text in your vhosts config:
+5. Run 'mkdir cache' command
+6. Run 'chmod 777 cache log web/uploads' command
+7. Run 'rm -rf cache/*' command
+8. Run 'php symfony doctrine:build-all-reload' command
+9. Add following text in your vhosts config:
 
     # Be sure to only have this line once in your configuration
     NameVirtualHost 127.0.0.1:80
@@ -32,5 +33,5 @@ file.php.dist => file.php
       </Directory>
     </VirtualHost>
 
-7. Append to your /etc/hosts:
+10. Append to your /etc/hosts:
 127.0.0.1 coloni.localhost

@@ -19,12 +19,14 @@ class settlementActions extends sfActions
   public function executeDefencesArea(sfWebRequest $request)
   {
     $this->getUser()->setSettlement($request->getParameter('id'));
-    $this->settlement = $this->getUser()->getSettlement();  }
+    $this->settlement = $this->getUser()->getSettlement();
+  }
   
   public function executeCityArea(sfWebRequest $request)
   {
     $this->getUser()->setSettlement($request->getParameter('id'));
-    $this->settlement = $this->getUser()->getSettlement();  }
+    $this->settlement = $this->getUser()->getSettlement();
+  }
   
   public function executeSquareArea(sfWebRequest $request)
   {
@@ -67,8 +69,7 @@ class settlementActions extends sfActions
       $field = $request->getParameter('field_id');
       $building = $request->getParameter('building_id');
       
-      $event = coEventBuildField::create($building, $field, $settlement);
-      coEventFactory::register($event);
+      coEventBuildField::register($building, $field, $settlement);
       
       $this->redirect("@settlement?id={$settlement}");
     } 
