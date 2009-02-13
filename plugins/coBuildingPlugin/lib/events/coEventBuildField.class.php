@@ -5,7 +5,7 @@ class coEventBuildField extends coEventBuild
   public static function register($building_id, $field_id, $settlement_id)
   {
     $instance = new self;
-    $instance->_data = array('building' => $building_id, 'field' => $field_id, 'settlement' => $settlement_id);
+    $instance->register_data = array('building' => $building_id, 'field' => $field_id, 'settlement' => $settlement_id);
 
     coEvent::register($instance);
   }
@@ -25,29 +25,24 @@ class coEventBuildField extends coEventBuild
     $event->type = 'BuildField';
     
     $event->EventSettlement[0]->role = 'builder';
-    $event->EventSettlement[0]->settlement_id = $this->_data['settlement'];
+    $event->EventSettlement[0]->settlement_id = $this->register_data['settlement'];
     
-    $event->EventBuildField->building_id = $this->_data['building'];
-    $event->EventBuildField->field_id = $this->_data['field'];
+    $event->EventBuildField->building_id = $this->register_data['building'];
+    $event->EventBuildField->field_id = $this->register_data['field'];
   }
   
   public function execute($event)
   {
-    $data = Doctrine_Query::create()
-      ->from('EventBuildField e')
-      ->leftJoin('e.Field f')
-      ->leftJoin('e.Building b')
-      ->fetchArray();
-
+    $data = $this->getEventData($event);
 
     sfContext::getInstance()->getEventDispatcher()->notify(
-      new sfEvent($this, 'settlement.build', $this->_data)
+      new sfEvent($this, 'settlement.build', $data)
     );
     
     $buildingStatus = Doctrine_Query::create()
       ->from('FieldBuilding fb')
-      ->where('fb.field_id = ?', $event->EventBuildField->field_id)
-      ->andWhere('fb.building_id = ?', $event->EventBuildField->field_id)
+      ->where('fb.field_id = ?', $data['EventBuildField']['field_id'])
+      ->andWhere('fb.building_id = ?', $data['EventBuildField']['building_id'])
       ->fetchOne();
       
     if($buildingStatus)
@@ -57,11 +52,26 @@ class coEventBuildField extends coEventBuild
     else
     {
       $buildingStatus = new FieldBuilding();
-      $buildingStatus->field_id = $event->EventBuildField->field_id;
-      $buildingStatus->building_id = $event->EventBuildField->building_id;
+      $buildingStatus->field_id = $data['EventBuildField']['field_id'];
+      $buildingStatus->building_id = $data['EventBuildField']['building_id'];
       $buildingStatus->level = 1;
     }
     
     $buildingStatus->save();
+  }
+
+  public function getEventData($event)
+  {
+    $data = parent::getEventData($event);
+
+    $data['EventBuildField'] = Doctrine_Query::create()
+      ->from('EventBuildField e')
+      ->leftJoin('e.Field f')
+      ->leftJoin('e.Building b')
+      ->fetchArray();
+    
+    $data['EventBuildField'] = $data['EventBuildField'][0];
+
+    return $data;
   }
 }

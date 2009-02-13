@@ -13,6 +13,7 @@
       <li><?php echo link_to('World', '@world_map'); ?></li>
       <li><?php echo link_to('Logout', '@logout'); ?></li>
     </ul>
+    <?php include_component('event', 'list'); ?>
     <?php endif; ?>
     <?php echo $sf_content ?>
   </body>

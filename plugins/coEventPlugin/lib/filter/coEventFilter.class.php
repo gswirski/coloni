@@ -26,18 +26,18 @@ class coEventFilter extends sfFilter
     
     foreach ($events as $event)
     {
+      $executor = 'coEvent' . $event['type'];
+      $executor = new $executor;
+
       if ($event->end < time())
       {
-        $executor = 'coEvent' . $event['type'];
-        $executor = new $executor;
         $executor->execute($event);
-        echo 'Has been built. <br />';
         
         $event->delete();
       }
       else
       {
-        echo $event->end - time() . ' seconds left. <br />';
+        coEvent::getInstance()->addToList($executor->getEventData($event));
       }
     }
 
