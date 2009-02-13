@@ -35,7 +35,7 @@ class coResource
 	 */
 	static private function getItemLevel($name,$type)
 	{
-		$eventName = ($type=='resource' ? 'resource_count' : $type.'_level');
+		$eventName = 'settlement.' . ($type=='resource' ? 'resource_count' : $type.'_level');
 		$levels = sfContext::getInstance()->getEventDispatcher()->filter(
 				new sfEvent(new self, $eventName, array(
   										'name' => $name,

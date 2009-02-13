@@ -14,6 +14,7 @@
       <li><?php echo link_to('Logout', '@logout'); ?></li>
     </ul>
     <?php include_component('event', 'list'); ?>
+    <?php include_component('resource', 'production'); ?>
     <?php endif; ?>
     <?php echo $sf_content ?>
   </body>
