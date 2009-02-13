@@ -15,8 +15,14 @@
   <?php echo link_to('Square', "@settlement_square_area?id={$settlement->id}"); ?>
 <p>
 
-<?php foreach($settlement->Field as $field) : ?>
+<?php foreach($fields as $field) : ?>
   <?php echo link_to(
-    "Field {$field->id}", 
-    "@settlement_production_field?settlement_id={$settlement->id}&field_id={$field->id}") ."- {$field->type}"; ?><br />
+    "Field {$field['id']}",
+    "@settlement_production_field?settlement_id={$settlement->id}&field_id={$field['id']}");
+
+    if ($field['FieldBuilding'])
+    {
+      echo " - {$field['FieldBuilding']['Building']['title']} ({$field['FieldBuilding']['level']})";
+    }
+  ; ?><br />
 <?php endforeach; ?>

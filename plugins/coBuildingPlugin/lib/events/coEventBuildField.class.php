@@ -55,6 +55,10 @@ class coEventBuildField extends coEventBuild
       $buildingStatus->field_id = $data['EventBuildField']['field_id'];
       $buildingStatus->building_id = $data['EventBuildField']['building_id'];
       $buildingStatus->level = 1;
+      $buildingStatus->save();
+
+      $field = $buildingStatus->Field;
+      $field->type = 'building';
     }
     
     $buildingStatus->save();
@@ -68,7 +72,7 @@ class coEventBuildField extends coEventBuild
       ->from('EventBuildField e')
       ->leftJoin('e.Field f')
       ->leftJoin('e.Building b')
-      ->fetchArray();
+      ->execute();
     
     $data['EventBuildField'] = $data['EventBuildField'][0];
 

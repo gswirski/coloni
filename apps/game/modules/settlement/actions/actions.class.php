@@ -14,6 +14,12 @@ class settlementActions extends sfActions
   {
     $this->getUser()->setSettlement($request->getParameter('id'));
     $this->settlement = $this->getUser()->getSettlement();
+    $this->fields = Doctrine_Query::create()
+      ->from('Field f')
+      ->leftJoin('f.FieldBuilding fb')
+      ->leftJoin('fb.Building b')
+      ->where('f.settlement_id = ?', $this->settlement->id)
+      ->fetchArray();
   }
   
   public function executeDefencesArea(sfWebRequest $request)

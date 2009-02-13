@@ -101,10 +101,12 @@ FieldBuilding:
       local: field_id
       foreign: id
       type: one
+      foreignType: one
     Building:
       local: building_id
       foreign: id
       type: one
+      foreignType: one
 
 EventBuildField:
   tableName: event_build_field
