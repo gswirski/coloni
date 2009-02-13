@@ -65,11 +65,18 @@ class coBaseUser extends sfBasicSecurityUser
 	
 	public function getSettlement()
 	{
+    if (!$this->getAttribute('settlement'))
+    {
+      $this->settlementObject = $this->getObject()->Country[0]->Settlement[0];
+      $this->setAttribute('settlement', $this->settlementObject->id);
+    }
+
 	  if (!$this->settlementObject)
 	  {
-	    $this->settlementObject = Doctrine::getTable('Settlement')->find(
-	      $this->getAttribute('settlement')
-	    );
+      $this->settlementObject = Doctrine::getTable('Settlement')->find(
+        $this->getAttribute('settlement')
+      );
+
 	  }
 	  return $this->settlementObject;
 	}

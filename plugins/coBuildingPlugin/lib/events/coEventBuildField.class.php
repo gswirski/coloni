@@ -2,10 +2,10 @@
 
 class coEventBuildField extends coEventBuild
 {
-  public static function register($building_id, $field_id, $settlement_id)
+  public static function register()
   {
     $instance = new self;
-    $instance->register_data = array('building' => $building_id, 'field' => $field_id, 'settlement' => $settlement_id);
+    $instance->register_data = array('building' => func_get_arg(0), 'field' => func_get_arg(1), 'settlement' => func_get_arg(2));
 
     coEvent::register($instance);
   }

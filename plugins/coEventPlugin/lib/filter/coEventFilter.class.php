@@ -14,7 +14,14 @@ class coEventFilter extends sfFilter
    */
   public function execute(sfFilterChain $filterChain)
   {
+
     $context = sfContext::getInstance();
+
+    if (!$context->getUser()->isAuthenticated())
+    {
+      $filterChain->execute();
+      return;
+    }
 
     $context->getEventDispatcher()->notify(new sfEvent(
       $this,
