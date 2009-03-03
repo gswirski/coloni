@@ -5,56 +5,50 @@ Resource:
       type: integer(1)
       primary: true
       autoincrement: true
-    module_name:
+    resource_name:
       type: string(50)
       notnull: true
-    type:
+    resource_type:
       type: enum
-      values: ['fundamental', 'extra', 'rating']
+      values: [fundamental, rating]
       notnull: true
-
-FundamentalResource:
-  inheritance:
-    extends: Resource
-    type: column_aggregtion
-    keyField: type
-    keyValue: 'fundamental'
-
-ExtraResource:
-  inheritance:
-    extends: Resource
-    type: column_aggregtion
-    keyField: type
-    keyValue: 'extra'
-
-RatingResource:
-  inheritance:
-    extends: Resource
-    type: column_aggregtion
-    keyField: type
-    keyValue: 'rating'
-
-SettlementResource:
-  tableName: settlement_resource
+ResourceDependency:
+  tableName: resource_dependency
   columns:
-    settlement_id:
-      type: integer(4)
-      primary: true
-    resource_id:
+    id:
       type: integer(1)
       primary: true
-    production:
-      type: integer(2)
+      autoincrement: true
+    dependency_for:
+      type: integer(1)
       notnull: true
-    count:
-      type: integer(4)
+    targettype:
+      type: enum
+      values: [building, resource, technology]
+      notnull: true
+    targetname:
+      type: string(20)
+      notnull: true
+    granularity:
+      type: float
+      notnull: true
+    production_base:
+      type: float
+      notnull: true
+    production_quotient:
+      type: float
+      notnull: true
+    bonus_base:
+      type: float
+      notnull: true
+    bonus_quotient:
+      type: float
+      notnull: true
+    efficiency:
+      type: float
       notnull: true
   relations:
-    Settlement:
-      local: settlement_id
-      foreign: id
-      type: one
     Resource:
-      local: resource_id
+      local: dependency_for
       foreign: id
       type: one
